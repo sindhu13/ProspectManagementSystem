@@ -85,8 +85,8 @@ class StockController extends Controller
 
     public function edit($id) {
         $stock = Stock::findOrFail($id);
-        $units = Unit::pluck('name', 'id');
-        $colors = Color::pluck('name', 'id');
+        $units = Unit::selectRaw('CONCAT (name, " - ", katashiki, " - ", suffix) as colums, id')->pluck('colums', 'id');
+        $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
         $positions = Position::pluck('name', 'id');
         $statusStocks = StatusStock::pluck('name', 'id');
         $branchs = Branch::pluck('name', 'id');

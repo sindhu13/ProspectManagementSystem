@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Prospect;
 use App\Color;
 use App\Unit;
-use App\statusProspect;
+use App\StatusProspect;
 use App\MarketingGroup;
 use App\MarketingHasEmployee;
 use App\ProspectActivity;
@@ -99,7 +99,7 @@ class ProspectController extends Controller
     public function create(){
         $units = Unit::selectRaw('CONCAT (name, " - ", katashiki, " - ", suffix) as colums, id')->orderBy('colums')->pluck('colums', 'id');
         $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
-        $statusProspects = statusProspect::limit(3)->orderBy('status_order')->pluck('name', 'id');
+        $statusProspects = StatusProspect::limit(3)->orderBy('status_order')->pluck('name', 'id');
         $options = DB::table('marketing_has_employees')
             ->join('marketing_groups', 'marketing_groups.id', '=', 'marketing_has_employees.marketing_group_id')
             ->join('employees', 'employees.id', '=', 'marketing_has_employees.employee_id')
@@ -153,7 +153,7 @@ class ProspectController extends Controller
         $prospect = Prospect::with('prospectActivity')->findOrFail($id);
         $units = Unit::selectRaw('CONCAT (name, " - ", katashiki, " - ", suffix) as colums, id')->pluck('colums', 'id');
         $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
-        $statusProspects = statusProspect::limit(3)->orderBy('status_order')->pluck('name', 'id');
+        $statusProspects = StatusProspect::limit(3)->orderBy('status_order')->pluck('name', 'id');
         $options = DB::table('marketing_has_employees')
             ->join('marketing_groups', 'marketing_groups.id', '=', 'marketing_has_employees.marketing_group_id')
             ->join('employees', 'employees.id', '=', 'marketing_has_employees.employee_id')
@@ -294,7 +294,7 @@ class ProspectController extends Controller
         $prospect = Prospect::with('prospectActivity')->findOrFail($id);
         $units = Unit::selectRaw('CONCAT (name, " - ", katashiki, " - ", suffix) as colums, id')->pluck('colums', 'id');
         $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
-        $statusProspects = statusProspect::whereIn('id', array(4))->orderBy('status_order')->pluck('name', 'id');
+        $statusProspects = StatusProspect::whereIn('id', array(4))->orderBy('status_order')->pluck('name', 'id');
         $stocks = Stock::selectRaw('CONCAT (chassis_code, " - ", engine_code) as colums, id')
             ->where('unit_id', '=', $prospect->unit_id)->where('color_id', '=', $prospect->color_id)
             ->where('branch_id', '=', 1)->where('last_status_id', '=', 1)
@@ -337,7 +337,7 @@ class ProspectController extends Controller
         $prospect = Prospect::with('prospectActivity')->findOrFail($id);
         $units = Unit::selectRaw('CONCAT (name, " - ", katashiki, " - ", suffix) as colums, id')->pluck('colums', 'id');
         $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
-        $statusProspects = statusProspect::whereIn('id', array(5))->orderBy('status_order')->pluck('name', 'id');
+        $statusProspects = StatusProspect::whereIn('id', array(5))->orderBy('status_order')->pluck('name', 'id');
         $stocks = Stock::join('prospect_activities', 'prospect_activities.stock_id', '=', 'stocks.id')
             ->selectRaw('CONCAT (chassis_code, " - ", engine_code) as colums, stocks.id')
             ->where('prospect_activities.id', $prospect->prospectActivity[0]->id)

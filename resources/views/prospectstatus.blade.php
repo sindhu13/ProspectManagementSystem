@@ -45,23 +45,23 @@
                     @php($sstot = 0)
                     @foreach($prospects as $prospect)
                       @if($prospect->id == $teamKc->id)
-                        @if($prospect->s == 1)
+                        @if($prospect->status_prospect_id == 1)
                           @php($vars['jan']['tot'] = $prospect->tot)
                           @php($mvars['jan']['tot'] += $prospect->tot)
                           @php($pvars['jan']['tot'] += $prospect->tot)
-                        @elseif($prospect->s == 2)
+                        @elseif($prospect->status_prospect_id == 2)
                           @php($vars['feb']['tot'] = $prospect->tot)
                           @php($mvars['feb']['tot'] += $prospect->tot)
                           @php($pvars['feb']['tot'] += $prospect->tot)
-                        @elseif($prospect->s == 3)
+                        @elseif($prospect->status_prospect_id == 3)
                           @php($vars['mar']['tot'] = $prospect->tot)
                           @php($mvars['mar']['tot'] += $prospect->tot)
                           @php($pvars['mar']['tot'] += $prospect->tot)
-                        @elseif($prospect->s == 4)
+                        @elseif($prospect->status_prospect_id == 4)
                           @php($vars['apr']['tot'] = $prospect->tot)
                           @php($mvars['apr']['tot'] += $prospect->tot)
                           @php($pvars['apr']['tot'] += $prospect->tot)
-                        @else
+                        @elseif($prospect->status_prospect_id == 5)
                           @php($vars['mei']['tot'] = $prospect->tot)
                           @php($mvars['mei']['tot'] += $prospect->tot)
                           @php($pvars['mei']['tot'] += $prospect->tot)
@@ -91,7 +91,7 @@
             @endforeach
 
             <tr style="font-weight: bold;">
-              <td>GRANT TOTAL</td>
+              <td>GRAND TOTAL</td>
               <td>{{ $mvars['jan']['tot'] }}</td><td>{{ $mvars['feb']['tot'] }}</td><td>{{ $mvars['mar']['tot'] }}</td>
               <td>{{ $mvars['apr']['tot'] }}</td><td>{{ $mvars['mei']['tot'] }}</td>
               <td>{{ $msstot }}</td>

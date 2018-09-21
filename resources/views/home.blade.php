@@ -81,6 +81,28 @@
 </div>
 @endforeach
 
+@foreach($branches as $branch)
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Prospect Activity {{ $branch->alias }} <small>Monthly progress</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @include('prospectactivity')
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
 
 <div class="row">
     <div class="col-md-12">

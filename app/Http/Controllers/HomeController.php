@@ -99,16 +99,28 @@ class HomeController extends Controller
 
         $prospects = Prospect::selectRaw('marketing_groups.id, prospect_activities.status_prospect_id, count(prospects.id) AS tot')
             ->leftjoin('prospect_activities', function($pa){
-                $pa->on('prospect_activities.prospect_id', '=', 'prospects.id')->orderBy('prospect_activities.id', 'DESC')->limit(1);
+                $pa->on('prospect_activities.id', '=', DB::raw('(SELECT id FROM prospect_activities WHERE prospect_activities.prospect_id = prospects.id ORDER BY id DESC LIMIT 1 )'));
             })
             ->leftjoin('status_prospects', 'status_prospects.id', '=', 'prospect_activities.status_prospect_id')
             ->leftjoin('marketing_has_employees', 'marketing_has_employees.id', '=', 'prospects.marketing_has_employee_id')
             ->leftjoin('marketing_groups', 'marketing_groups.id', '=', 'marketing_has_employees.marketing_group_id')
+            ->where('status_prospects.id', '>', 2)
             ->whereMonth('prospect_date', $n->month)
             ->whereYear('prospect_date', $n->year)
             ->groupBy('prospects.id', 'prospect_activities.status_prospect_id', 'marketing_groups.id')
             ->get();
 
-        return view('home', compact('branches', 'subBranches', 'stockKc', 'salesKc', 'stockSg', 'salesSg', 'teamKcs', 'saleKcs', 'prospects'));
+        $activities = Prospect::selectRaw('marketing_groups.id, prospect_activities.status_prospect_id, count(prospects.id) AS tot')
+            ->leftjoin('prospect_activities', 'prospect_activities.prospect_id', '=', 'prospects.id')
+            ->leftjoin('status_prospects', 'status_prospects.id', '=', 'prospect_activities.status_prospect_id')
+            ->leftjoin('marketing_has_employees', 'marketing_has_employees.id', '=', 'prospects.marketing_has_employee_id')
+            ->leftjoin('marketing_groups', 'marketing_groups.id', '=', 'marketing_has_employees.marketing_group_id')
+            ->where('status_prospects.id', '>', 2)
+            ->whereMonth('prospect_date', $n->month)
+            ->whereYear('prospect_date', $n->year)
+            ->groupBy('prospects.id', 'prospect_activities.status_prospect_id', 'marketing_groups.id')
+            ->get();
+
+        return view('home', compact('branches', 'subBranches', 'stockKc', 'salesKc', 'stockSg', 'salesSg', 'teamKcs', 'saleKcs', 'prospects', 'activities'));
     }
 }
