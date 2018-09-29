@@ -49,7 +49,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>PMS</span></a>
+                        <a href="/" class="site_title"><i class="glyphicon glyphicon-th"></i> <span>PMS</span></a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -57,7 +57,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="{{ asset('images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                            <img src="{{ asset('images/user.png') }}" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -78,9 +78,12 @@
                                         <li><a href="{{route('prospects.index')}}">Prospects</a></li>
                                         <li><a href="{{route('prospects.spk')}}">Prospect SPK</a></li>
                                         <li><a href="{{route('prospects.do')}}">Prospect DO</a></li>
-                                        <li><a href="{{route('statusProspects.index')}}">Prospect Statuses</a></li>
+                                        @role('Super User|Admin')
+                                            <li><a href="{{route('statusProspects.index')}}">Prospect Statuses</a></li>
+                                        @endrole
                                     </ul>
                                 </li>
+                                @role('Super User|Admin')
                                 <li><a><i class="fa fa-car"></i> Units <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="{{route('unitModels.index')}}">Unit Model</a></li>
@@ -96,22 +99,29 @@
                                         <li><a href="{{route('leasings.index')}}">Leasings</a></li>
                                     </ul>
                                 </li>
+                                @endrole
                                 <li><a><i class="fa fa-desktop"></i>Stocks <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="{{route('stocks.index')}}">Stocks</a></li>
+                                        @role('Super User|Admin')
                                         <li><a href="{{route('statusStocks.index')}}">Stock Statuses</a></li>
+                                        @endrole
                                     </ul>
                                 </li>
+                                @role('Super User|Admin|Director|Branch Manager|Supervisor')
                                 <li><a><i class="fa fa-tags"></i>Sales <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="{{route('sales.salesperleasing')}}">Sales Perleasing</a></li>
                                         <li><a href="{{route('sales.salespercolor')}}">Sales Percolor</a></li>
                                         <li><a href="{{route('sales.salespermodel')}}">Sales Perunitmodel</a></li>
-                                        <li><a href="{{route('sales.salesperformance')}}">Sales Performance</a></li>
+                                        <li><a href="{{route('sales.salesperformance')}}">Sales Force Performance</a></li>
+                                        <li><a href="{{route('sales.salesactivity')}}">Sales Force Activity</a></li>
                                     </ul>
                                 </li>
+                                @endrole
                             </ul>
                         </div>
+                        @role('Super User')
                         <div class="menu_section">
                         <h3>Live On</h3>
                             <ul class="nav side-menu">
@@ -121,15 +131,24 @@
                                         <li><a href="{{route('subBranches.index')}}">Sub Branchs</a></li>
                                     </ul>
                                 </li>
-                                <li><a><i class="fa fa-windows"></i> Employees <span class="fa fa-chevron-down"></span></a>
+                                <li><a><i class="fa fa-users"></i> Employees <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="{{route('employees.index')}}">Employees</a></li>
                                         <li><a href="{{route('departements.index')}}">Departements</a></li>
                                         <li><a href="{{route('marketingGroups.index')}}">Marketing Group</a></li>
+                                        <li><a href="{{route('marketingHasEmployees.formula')}}">Set Formula</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-users"></i> Users <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{{route('users.index')}}">User</a></li>
+                                        <li><a href="{{route('roles.index')}}">Roles</a></li>
+                                        <li><a href="{{route('permissions.index')}}">Permissions</a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
+                        @endrole
                     </div>
                     <!-- /sidebar menu -->
 
@@ -169,7 +188,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{ asset('images/img.jpg') }}" alt="">{{ Auth::user()->name }}
+                                    <img src="{{ asset('images/user.png') }}" alt="">{{ Auth::user()->name }}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

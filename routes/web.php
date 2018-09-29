@@ -23,6 +23,8 @@ Route::get('/sales/salesperleasing', ['as' => 'sales.salesperleasing', 'uses' =>
 Route::get('/sales/salespercolor', ['as' => 'sales.salespercolor', 'uses' => 'ProspectController@salespercolor']);
 Route::get('/sales/salespermodel', ['as' => 'sales.salespermodel', 'uses' => 'ProspectController@salespermodel']);
 Route::get('/sales/salesperformance', ['as' => 'sales.salesperformance', 'uses' => 'ProspectController@salesperformance']);
+Route::get('/sales/salesactivity', ['as' => 'sales.salesactivity', 'uses' => 'ProspectController@salesactivity']);
+Route::get('/marketingHasEmployees/formula/', ['as' => 'marketingHasEmployees.formula', 'uses' => 'MarketingHasEmployeeController@formula']);
 // Route::get('/stocks/getChassis/{unitid}/{colorid}', ['as' => 'stocks.getChassis', 'uses' => 'StockController@getChassis']);
 // Route::get('/stocks/getChassis', function(){
 //     $unitid = Input::get('unitid');
@@ -33,6 +35,7 @@ Route::get('/sales/salesperformance', ['as' => 'sales.salesperformance', 'uses' 
 //     return Response::json($stocks);
 // });
 Route::put('/prospects/{id}/updateDo', ['as' => 'prospects.updateDo', 'uses' => 'ProspectController@updateDo']);
+Route::put('/marketingHasEmployees/setformula/', ['as' => 'marketingHasEmployees.setformula', 'uses' => 'MarketingHasEmployeeController@setformula']);
 
 Route::post('/stocks/getChassis/', ['as'=>'stocks.getChassis','uses'=>'StockController@getChassis']);
 Route::post('/prospects/show/', ['as'=>'prospects.show','uses'=>'ProspectController@show']);
@@ -40,6 +43,7 @@ Route::post('/sales/salesperleasingajax', ['as' => 'sales.salesperleasingajax', 
 Route::post('/sales/salespercolorajax', ['as' => 'sales.salespercolorajax', 'uses' => 'ProspectController@salespercolorajax']);
 Route::post('/sales/salespermodelajax', ['as' => 'sales.salespermodelajax', 'uses' => 'ProspectController@salespermodelajax']);
 Route::post('/sales/salesperformanceajax', ['as' => 'sales.salesperformanceajax', 'uses' => 'ProspectController@salesperformanceajax']);
+Route::post('/sales/salesactivityajax', ['as' => 'sales.salesactivityajax', 'uses' => 'ProspectController@salesactivityajax']);
 
 Route::resource('branches', 'BranchController');
 Route::resource('subBranches', 'SubBranchController');
@@ -58,3 +62,6 @@ Route::resource('stocks', 'StockController');
 Route::resource('statusStocks', 'StatusStockController');
 Route::resource('statusProspects', 'StatusProspectController');
 Route::resource('prospects', 'ProspectController');
+Route::resource('users', 'UserController');
+Route::resource('roles', 'RoleController');
+Route::resource('permissions', 'PermissionController');

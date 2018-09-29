@@ -7,6 +7,7 @@ use App\models\Departement;
 use App\models\MarketingGroup;
 use App\models\MarketingHasEmployee;
 use App\models\SubBranch;
+use App\models\User;
 
 class Employee extends Model
 {
@@ -28,5 +29,10 @@ class Employee extends Model
     public function marketingHasEmployee()
     {
         return $this->hasMany('App\MarketingHasEmployee');
+    }
+
+    public function user()
+    {
+        return $this->hasMany('App\User');
     }
 }

@@ -36,14 +36,22 @@
           'oct' => array('month' => 10, 'tot' => 0), 'nov' => array('month' => 11, 'tot' => 0), 'dec' => array('month' => 12, 'tot' => 0),
         ))
         @php($psstot = 0)
-        <tr style="font-weight: bold; background-color: #e6e6e6;">
-          <td colspan = "14" align="center">{{ $subBranch->name }}</td>
-        </tr>
+        @role('Supervisor')
+            <!-- Supervisor -->
+        @else
+            <tr style="font-weight: bold; background-color: #e6e6e6;">
+              <td colspan = "14" align="center">{{ $subBranch->name }}</td>
+            </tr>
+        @endif
         @foreach($teams as $team)
           @if($subBranch->id == $team->sb_id)
-            <tr>
-              <td colspan = "14" style="font-weight: bold;">{{ $team->name }}</td>
-            </tr>
+              @role('Supervisor')
+                  <!-- Supervisor -->
+              @else
+                  <tr>
+                    <td colspan = "14" style="font-weight: bold;">{{ $team->name }}</td>
+                  </tr>
+              @endif
             @php($mvars = array(
               'jan' => array('month' => 1, 'tot' => 0), 'feb' => array('month' => 2, 'tot' => 0), 'mar' => array('month' => 3, 'tot' => 0),
               'apr' => array('month' => 4, 'tot' => 0), 'mei' => array('month' => 5, 'tot' => 0), 'jun' => array('month' => 6, 'tot' => 0),
@@ -171,24 +179,33 @@
             </tr>
           @endif {{-- End If place --}}
         @endforeach {{-- End Foreach Marketings --}}
-        <tr style="font-weight: bold;">
-          <td>TOTAL PLACE</td>
-          <td>{{ $pvars['jan']['tot'] }}</td><td>{{ $pvars['feb']['tot'] }}</td><td>{{ $pvars['mar']['tot'] }}</td><td>{{ $pvars['apr']['tot'] }}</td>
-          <td>{{ $pvars['mei']['tot'] }}</td><td>{{ $pvars['jun']['tot'] }}</td><td>{{ $pvars['jul']['tot'] }}</td><td>{{ $pvars['aug']['tot'] }}</td>
-          <td>{{ $pvars['sep']['tot'] }}</td><td>{{ $pvars['oct']['tot'] }}</td><td>{{ $pvars['nov']['tot'] }}</td><td>{{ $pvars['dec']['tot'] }}</td>
-          <td>{{ $psstot }}</td>
-        </tr>
-        <tr>
-          <td colspan="14">&nbsp;</td>
-        </tr>
+        @role('Supervisor')
+            <!-- Supervisor -->
+        @else
+            <tr style="font-weight: bold;">
+              <td>TOTAL PLACE</td>
+              <td>{{ $pvars['jan']['tot'] }}</td><td>{{ $pvars['feb']['tot'] }}</td><td>{{ $pvars['mar']['tot'] }}</td><td>{{ $pvars['apr']['tot'] }}</td>
+              <td>{{ $pvars['mei']['tot'] }}</td><td>{{ $pvars['jun']['tot'] }}</td><td>{{ $pvars['jul']['tot'] }}</td><td>{{ $pvars['aug']['tot'] }}</td>
+              <td>{{ $pvars['sep']['tot'] }}</td><td>{{ $pvars['oct']['tot'] }}</td><td>{{ $pvars['nov']['tot'] }}</td><td>{{ $pvars['dec']['tot'] }}</td>
+              <td>{{ $psstot }}</td>
+            </tr>
+            <tr>
+              <td colspan="14">&nbsp;</td>
+            </tr>
+        @endif
       @endforeach {{-- End Foreach Places --}}
-      <tr style="font-weight: bold;">
-        <td>GRAND TOTAL</td>
-        <td>{{ $gvars['jan']['tot'] }}</td><td>{{ $gvars['feb']['tot'] }}</td><td>{{ $gvars['mar']['tot'] }}</td><td>{{ $gvars['apr']['tot'] }}</td>
-        <td>{{ $gvars['mei']['tot'] }}</td><td>{{ $gvars['jun']['tot'] }}</td><td>{{ $gvars['jul']['tot'] }}</td><td>{{ $gvars['aug']['tot'] }}</td>
-        <td>{{ $gvars['sep']['tot'] }}</td><td>{{ $gvars['oct']['tot'] }}</td><td>{{ $gvars['nov']['tot'] }}</td><td>{{ $gvars['dec']['tot'] }}</td>
-        <td>{{ $gsstot }}</td>
-      </tr>
+      @role('Supervisor')
+          <!-- Supervisor -->
+      @else
+          <tr style="font-weight: bold;">
+            <td>GRAND TOTAL</td>
+            <td>{{ $gvars['jan']['tot'] }}</td><td>{{ $gvars['feb']['tot'] }}</td><td>{{ $gvars['mar']['tot'] }}</td><td>{{ $gvars['apr']['tot'] }}</td>
+            <td>{{ $gvars['mei']['tot'] }}</td><td>{{ $gvars['jun']['tot'] }}</td><td>{{ $gvars['jul']['tot'] }}</td><td>{{ $gvars['aug']['tot'] }}</td>
+            <td>{{ $gvars['sep']['tot'] }}</td><td>{{ $gvars['oct']['tot'] }}</td><td>{{ $gvars['nov']['tot'] }}</td><td>{{ $gvars['dec']['tot'] }}</td>
+            <td>{{ $gsstot }}</td>
+          </tr>
+      @endif
+
     </tbody>
   </table>
 </div>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\models\MarketingGroup;
 use App\models\Employee;
 use App\models\Prospect;
+use App\models\Target;
 
 class MarketingHasEmployee extends Model
 {
@@ -22,5 +23,10 @@ class MarketingHasEmployee extends Model
     public function prospect()
     {
         return $this->hasMany('App\Prospect');
+    }
+
+    public function target()
+    {
+        return $this->hasMany('App\Target');
     }
 }

@@ -25,7 +25,7 @@
         @endforeach
         <div class="x_panel">
             <div class="x_title">
-                <h2>Prospects <small>Name</small></h2>
+                <h2>Prospects <small>Name </small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
@@ -73,15 +73,19 @@
                                     <div class="buttons">
 
                                         {{-- Form::open(['method' => 'DELETE', 'route' => ['prospects.destroy', $prospect->id], 'onsubmit' => 'return ConfirmDelete()', 'class' => 'delete' ]) --}}
-                                        @php ($status = ['low', 'medium', 'hot'])
-                                        @if (in_array(strtolower($prospect->prospectActivity[0]->statusProspect->name), $status))
-                                            <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn btn-info btn-xs" title="Edit"> <i class="fa fa-pencil"></i></a>
-                                        @endif
-                                        @if(strtolower($prospect->prospectActivity[0]->statusProspect->name) === 'hot')
-                                            <a href="{{ route('prospects.prospectSpk', $prospect->id) }}" class="btn btn-info btn-xs" title="SPK"> <i class="fa fa-share-square-o"></i></a>
-                                        @endif
+                                        @role('Super Admin|Admin')
+                                            @php ($status = ['low', 'medium', 'hot'])
+                                            @if (in_array(strtolower($prospect->prospectActivity[0]->statusProspect->name), $status))
+                                                <a href="{{ route('prospects.edit', $prospect->id) }}" class="btn btn-info btn-xs" title="Edit"> <i class="fa fa-pencil"></i></a>
+                                            @endif
+                                            @if(strtolower($prospect->prospectActivity[0]->statusProspect->name) === 'hot')
+                                                <a href="{{ route('prospects.prospectSpk', $prospect->id) }}" class="btn btn-info btn-xs" title="SPK"> <i class="fa fa-share-square-o"></i></a>
+                                            @endif
+                                        @endrole
                                         <button type="button" class="btn btn-primary btn-xs" id="modaltest" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-eye"></i></button>
-                                        {{-- Form::button('<i class="fa fa-trash"> </i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) --}}
+                                        @role('Super Admin')
+                                            {{-- Form::button('<i class="fa fa-trash"> </i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) --}}
+                                        @endrole
                                         {{-- Form::close() --}}
                                     </div>
                                 </td>

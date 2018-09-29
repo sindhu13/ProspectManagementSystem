@@ -16,7 +16,7 @@ class PendorController extends Controller
     */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'role:Admin|Super User']);
     }
 
     /**

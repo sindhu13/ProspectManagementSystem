@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Helpers;
 use App\Stock;
 use App\Unit;
 use App\Color;
@@ -21,7 +22,8 @@ class StockController extends Controller
     */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware('auth');
+        $this->middleware('role:Super User|Admin')->only('create', 'edit', 'destroy');
     }
 
     /**
@@ -31,10 +33,19 @@ class StockController extends Controller
     */
     public function index()
     {
+        $brch = Helpers::getBranch();
+
         $stocks = Stock::with('unit', 'position', 'branch')
+            ->where('last_status_id', '<', 3)
+            ->where(function($query){
+                if(Helpers::getBranch()->alias != 'HO'){
+                    $query->where('branch_id', Helpers::getBranch()->id);
+                }
+            })
             ->orderBy('id')
             ->get();
-        return view('stocks.index', ['stocks' => $stocks]);
+
+        return view('stocks.index', compact('stocks'));
         //  return view('Branch');
     }
 
@@ -74,8 +85,9 @@ class StockController extends Controller
         $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
         $positions = Position::pluck('name', 'id');
         $statusStocks = StatusStock::pluck('name', 'id');
-        $branchs = Branch::pluck('name', 'id');
-        return view('stocks.create', compact('units', 'colors', 'positions', 'statusStocks', 'branchs'));
+        $branchs = Branch::where('id', '>', 1)->orderBy('id')->pluck('name', 'id');
+        $brn = Helpers::getBranch()->id;
+        return view('stocks.create', compact('units', 'colors', 'positions', 'statusStocks', 'branchs', 'brn'));
     }
 
     public function show($id) {
@@ -89,8 +101,9 @@ class StockController extends Controller
         $colors = Color::selectRaw('CONCAT (name, " - ", code) as colums, id')->pluck('colums', 'id');
         $positions = Position::pluck('name', 'id');
         $statusStocks = StatusStock::pluck('name', 'id');
-        $branchs = Branch::pluck('name', 'id');
-        return view('stocks.edit', compact('stock', 'units', 'colors', 'positions', 'statusStocks', 'branchs'));
+        $branchs = Branch::where('id', '>', 1)->orderBy('id')->pluck('name', 'id');
+        $brn = Helpers::getBranch()->id;
+        return view('stocks.edit', compact('stock', 'units', 'colors', 'positions', 'statusStocks', 'branchs', 'brn'));
     }
 
     public function update(Request $request, $id) {

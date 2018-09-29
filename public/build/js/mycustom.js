@@ -161,6 +161,38 @@ $('#salesPerformanceSearchYear').on('change', function(){
     });
 });
 
+$('#salesActivitySearchId').on('change', function(){
+    var token = $("input[name='_token']").val();
+    let branch_id = $('#salesActivitySearchId').val();
+    let year = $('#salesActivitySearchYear').val();
+    let $select = $('.x_content');
+    $.ajax({
+        url: "/sales/salesactivityajax/",
+        method: 'POST',
+        data: {branch_id:branch_id, yearsearch:year, _token:token},
+        success: function(data) {
+            $select.html('');
+            $select.html(data.options);
+        }
+    });
+});
+
+$('#salesActivitySearchYear').on('change', function(){
+    var token = $("input[name='_token']").val();
+    let branch_id = $('#salesActivitySearchId').val();
+    let year = $('#salesActivitySearchYear').val();
+    let $select = $('.x_content');
+    $.ajax({
+        url: "/sales/salesactivityajax/",
+        method: 'POST',
+        data: {branch_id:branch_id, yearsearch:year, _token:token},
+        success: function(data) {
+            $select.html('');
+            $select.html(data.options);
+        }
+    });
+});
+
 function dynamicDropdown(selector, unitid, colorid){
     var token = $("input[name='_token']").val();
     let $select = $(selector);

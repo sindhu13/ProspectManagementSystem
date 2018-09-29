@@ -27,7 +27,11 @@
             </div>
             {!! Form::open(['method' => 'get', 'url' => '/sales/salesperformance', 'class' => 'navbar-form navbar-right', 'role' => 'search']) !!}
             @php($now = Carbon\Carbon::now())
-            {{ Form::select('branch_id', $branches, 1, ['class' => 'form-control', 'id' => 'salesPerformanceSearchId']) }}
+            @role('Super User|Director')
+                {{ Form::select('branch_id', $branches, 2, ['class' => 'form-control', 'id' => 'salesPerformanceSearchId']) }}
+            @else
+                {{ Form::select('branch_id', $branches, $bid, ['class' => 'form-control', 'id' => 'salesPerformanceSearchId', 'disabled' => true]) }}
+            @endrole
             {{ Form::selectYear('yearsearch', $now->year, 2015, $now->year, ['class' => 'form-control', 'id' => 'salesPerformanceSearchYear']) }}
             {!! Form:: close() !!}
 

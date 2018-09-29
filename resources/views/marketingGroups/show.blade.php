@@ -42,6 +42,7 @@
                             <th>Sales Forces</th>
                             <th>Begin Work</th>
                             <th>End Work</th>
+                            <th>Target</th>
                             <th>Last Modified</th>
                             <th>Operations</th></th>
                         </tr>
@@ -55,6 +56,7 @@
                                 <td>{{ $marketingHasEmployee->employee->name }}</td>
                                 <td>{{ $marketingHasEmployee->employee->begin_work }}</td>
                                 <td>{{ $marketingHasEmployee->employee->end_work }}</td>
+                                <td>{{ $marketingHasEmployee->target[0]->target }}</td>
                                 <td>{{ date('d m Y', strtotime($marketingHasEmployee->created_at))}}</td>
                                 <td>
                                     <div class="buttons">
@@ -70,6 +72,7 @@
         </div>
     </div>
 </div>
+
 <script>
     function ConfirmDelete(){
         return confirm('Are you sure?');

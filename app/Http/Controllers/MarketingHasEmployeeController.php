@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\MarketingHasEmployee;
 use App\MarketingGroup;
 use App\Employee;
+use App\Target;
 
 class MarketingHasEmployeeController extends Controller
 {
@@ -18,7 +19,7 @@ class MarketingHasEmployeeController extends Controller
     */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'role:Super User|HRD']);
     }
 
     /**
@@ -39,7 +40,7 @@ class MarketingHasEmployeeController extends Controller
     {
         $this->validate($request, [
             'marketing_group_id' => 'required',
-            'employee_id' => 'required',
+            'employee_id' => 'required|unique:marketing_has_employees,employee_id',
             'begin_work' => 'required',
         ]);
 
@@ -48,6 +49,13 @@ class MarketingHasEmployeeController extends Controller
         $message->employee_id = $request->input('employee_id');
         $message->begin_work = $request->input('begin_work');
         $message->save();
+
+        $target = new Target;
+        $target->target = $request->input('target');
+        $target->month = $request->input('month');
+        $target->year = $request->input('year');
+        $message->target()->save($target);
+
 
         //Display a successful message upon save
         $request->session()->flash('alert-success', 'Sales Force was successful added!');
@@ -88,6 +96,13 @@ class MarketingHasEmployeeController extends Controller
         $message->begin_work = $request->input('begin_work');
         $message->end_work = $request->input('end_work');
         $message->save();
+
+        $target = Target::findOrFail($request->input('target_id'));
+        $target->target = $request->input('target');
+        $target->month = $request->input('month');
+        $target->year = $request->input('year');
+        $target->save();
+
         $request->session()->flash('alert-success', 'Sales Force was successful updated!');
         return redirect()->route('marketingGroups.show', $request->input('marketing_group_id'));
     }
@@ -97,5 +112,29 @@ class MarketingHasEmployeeController extends Controller
         $marketingHasEmployee->delete();
         Session::flash('alert-info', 'MarketingHasEmployee was successful deleted!');
         return redirect()->route('marketingHasEmployees.index');
+    }
+
+    public function formula(){
+        $marketingHasEmployee = MarketingHasEmployee::wherehas('target', function($q){
+            $n = \Carbon\Carbon::now();
+            $q->where('year', $n->year)
+                ->where('month', $n->month);
+            })
+            ->limit(1)
+            ->get();
+        return view('marketingHasEmployees.formula', compact('marketingHasEmployee'));
+    }
+
+    public function setformula(Request $request){
+        $this->validate($request, [
+            'formula' => 'required',
+        ]);
+        $n = \Carbon\Carbon::now();
+        $message = Target::where('year', $n->year)
+            ->where('month', $n->month)
+            ->update(['formula' => $request->input('formula')]);
+
+        $request->session()->flash('alert-success', 'Formula was successful Set!');
+        return redirect()->route('marketingGroups.index');
     }
 }

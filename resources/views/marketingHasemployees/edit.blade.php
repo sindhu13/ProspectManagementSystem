@@ -22,19 +22,29 @@
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Sales Force <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         {{Form::hidden('marketing_group_id', $mgid)}}
-                        {{Form::select('employee_id', $employees, null, ['class' => 'form-control col-md-7 col-xs-12', 'placeholder' => 'Enter Sales Force'])}}
+                        {{Form::select('employee_id_', $employees, $marketingHasEmployee->employee_id, ['class' => 'form-control col-md-7 col-xs-12', 'disabled' => true])}}
+                        {{Form::hidden('employee_id', null)}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Begin Work <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{Form::date('begin_work', $marketingHasEmployee->begin_work, ['class' => 'form-control col-md-7 col-xs-12', 'placeholder' => 'Enter Begin Work'])}}
+                        {{Form::date('begin_work', \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $marketingHasEmployee->begin_work)->format('Y-m-d'), ['readonly' => 'true'])}}
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">End Work <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         {{Form::date('end_work', '', ['class' => 'form-control col-md-7 col-xs-12', 'placeholder' => 'Enter End Work'])}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Target <span class="required">*</span></label>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        {{Form::text('target', $marketingHasEmployee->target[0]->target, ['class' => 'form-control col-md-7 col-xs-12', 'placeholder' => 'Enter Target'])}}
+                        {{Form::hidden('target_id', $marketingHasEmployee->target[0]->id)}}
+                        {{Form::hidden('month', date('m'))}}
+                        {{Form::hidden('year', date('Y'))}}
                     </div>
                 </div>
                 <div class="ln_solid"></div>

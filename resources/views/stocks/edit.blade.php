@@ -21,7 +21,8 @@
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Branch <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{Form::select('branch_id', $branchs, null, ['class' => 'form-control col-md-7 col-xs-12', 'placeholder' => 'Enter Branch'])}}
+                        {{Form::select('branch_id_', $branchs, $brn, ['class' => 'form-control col-md-7 col-xs-12', 'disabled' => 'true'])}}
+                        {{Form::hidden('branch_id', $brn, ['class' => 'form-control col-md-7 col-xs-12'])}}
                     </div>
                 </div>
                 <div class="form-group">

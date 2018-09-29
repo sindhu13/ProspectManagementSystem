@@ -13,7 +13,7 @@
         </div>
         <div class="x_panel">
             <div class="x_title">
-                <h2>Stock <small>Form Add New</small></h2>
+                <h2>Stock <small>Form Add New {{$brn}}</small></h2>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
@@ -21,7 +21,12 @@
                 <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Branch <span class="required">*</span></label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        {{Form::select('branch_id', $branchs, 1, ['class' => 'form-control col-md-7 col-xs-12'])}}
+                        @role('Super User')
+                            {{Form::select('branch_id', $branchs, 2, ['class' => 'form-control col-md-7 col-xs-12'])}}
+                        @else
+                            {{Form::select('branch_id_', $branchs, $brn, ['class' => 'form-control col-md-7 col-xs-12', 'disabled' => 'true'])}}
+                            {{Form::hidden('branch_id', $brn, ['class' => 'form-control col-md-7 col-xs-12'])}}
+                        @endrole
                     </div>
                 </div>
                 <div class="form-group">

@@ -58,7 +58,7 @@
                                     @endif
                                     <tr>
                                         <td width="20%">Supervisor</td>
-                                        <td>{{ $prospect->marketingHasEmployee->employee->name }}</td>
+                                        <td>{{ $prospect->marketingHasEmployee->marketingGroup->name }}</td>
                                     </tr>
                                     <tr>
                                         <td width="20%">Sales Force</td>

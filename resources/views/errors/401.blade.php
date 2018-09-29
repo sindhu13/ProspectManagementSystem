@@ -2,9 +2,14 @@
 @extends('layouts.error')
 
 @section('content')
-    <div class='col-lg-4 col-lg-offset-4'>
-        <h1><center>401<br>
-        ACCESS DENIED</center></h1>
+<div class="col-md-12">
+    <div class="col-middle">
+        <div class="text-center text-center">
+            <h1 class="error-number">401</h1>
+            <h2>UNAUTHORIZED</h2>
+            <p>Sorry you don't have permission.</p>
+        </div>
     </div>
+</div>
 
 @endsection

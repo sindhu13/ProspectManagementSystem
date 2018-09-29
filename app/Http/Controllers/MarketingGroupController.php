@@ -19,7 +19,7 @@ class MarketingGroupController extends Controller
     */
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'role:Super User|HRD']);
     }
 
     /**
@@ -63,7 +63,7 @@ class MarketingGroupController extends Controller
 
     public function show($id) {
         $marketingGroup = MarketingGroup::with('employee')->findOrFail($id); //Find post of id = $id
-        $marketingHasEmployees = MarketingHasEmployee::with('employee')->where('marketing_group_id', $id)->get();
+        $marketingHasEmployees = MarketingHasEmployee::with('employee', 'target')->where('marketing_group_id', $id)->get();
         return view ('marketingGroups.show', compact('marketingGroup', 'marketingHasEmployees'));
     }
 

@@ -72,13 +72,17 @@
                                     <div class="buttons">
 
                                         {{-- Form::open(['method' => 'DELETE', 'route' => ['prospects.destroy', $prospect->id], 'onsubmit' => 'return ConfirmDelete()', 'class' => 'delete' ]) --}}
+                                        @role('Super Admin')
                                         @php ($status = ['low', 'medium', 'hot'])
-                                        @if(strtolower($prospect->prospectActivity[0]->statusProspect->name) === 'spk')
-                                            <a href="{{ route('prospects.prospectDo', $prospect->id) }}" class="btn btn-info btn-xs" title="DO"> <i class="fa fa-share-square-o"></i></a>
-                                        @endif
+                                            @if(strtolower($prospect->prospectActivity[0]->statusProspect->name) === 'spk')
+                                                <a href="{{ route('prospects.prospectDo', $prospect->id) }}" class="btn btn-info btn-xs" title="DO"> <i class="fa fa-share-square-o"></i></a>
+                                            @endif
+                                        @endrole
                                         <!-- <a href="{{ route('prospects.show', $prospect->id) }}" class="btn btn-info btn-xs" title="View"> <i class="fa fa-eye"></i></a> -->
                                         <button type="button" class="btn btn-primary btn-xs" id="modaltest" data-toggle="modal" data-target=".bs-example-modal-lg"><i class="fa fa-eye"></i></button>
-                                        {{-- Form::button('<i class="fa fa-trash"> </i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) --}}
+                                        @role('Super Admin')
+                                            {{-- Form::button('<i class="fa fa-trash"> </i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) --}}
+                                        @endrole
                                         {{-- Form::close() --}}
                                     </div>
                                 </td>

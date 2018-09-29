@@ -52,7 +52,9 @@
                             <th>Position</th>
                             <th>Branch</th>
                             <th>Status</th>
+                            @role('Super User|Admin')
                             <th>Operations</th></th>
+                            @endrole
                         </tr>
                     </thead>
 
@@ -75,6 +77,7 @@
                                 @else
                                     <td>DO</td>
                                 @endif
+                                @role('Super User|Admin')
                                 <td>
                                     <div class="buttons">
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['stocks.destroy', $stock->id], 'onsubmit' => 'return ConfirmDelete()', 'class' => 'delete' ]) !!}
@@ -83,6 +86,7 @@
                                         {!! Form::close() !!}
                                     </div>
                                 </td>
+                                @endrole
                             </tr>
                         @endforeach
                     </tbody>
