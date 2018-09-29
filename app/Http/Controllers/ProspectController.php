@@ -740,7 +740,7 @@ class ProspectController extends Controller
                 if(isset($id)){
                     $query->where('branch_id', '=', $id);
                 }else{
-                    if(Helpers::getBranch()->alias == 'HO'){
+                    if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                         $query->where('branch_id', '=', 2);
                     }else{
                         $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -753,7 +753,7 @@ class ProspectController extends Controller
             ->join('employees', 'employees.id', '=', 'marketing_groups.employee_id')
             ->join('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
             ->where(function($q){
-                if(Helpers::getBranch()->alias != 'HO'){
+                if(Helpers::getBranch()->name == 'Supervisor'){
                     $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                 }
             })
@@ -762,7 +762,7 @@ class ProspectController extends Controller
                 if(isset($id)){
                     $query->where('branch_id', '=', $id);
                 }else{
-                    if(Helpers::getBranch()->alias == 'HO'){
+                    if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                         $query->where('branch_id', '=', 2);
                     }else{
                         $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -775,7 +775,7 @@ class ProspectController extends Controller
             ->join('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
             ->join('marketing_groups', 'marketing_groups.id', '=', 'marketing_has_employees.marketing_group_id')
             ->where(function($q){
-                if(Helpers::getBranch()->alias != 'HO'){
+                if(Helpers::getBranch()->name == 'Supervisor'){
                     $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                 }
             })
@@ -784,7 +784,7 @@ class ProspectController extends Controller
                 if(isset($id)){
                     $query->where('branch_id', '=', $id);
                 }else{
-                    if(Helpers::getBranch()->alias == 'HO'){
+                    if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                         $query->where('branch_id', '=', 2);
                     }else{
                         $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -804,7 +804,7 @@ class ProspectController extends Controller
             ->join('employees', 'employees.id', '=', 'marketing_has_employees.employee_id')
             ->where('last_status_id', '=', 3)
             ->where(function($q){
-                if(Helpers::getBranch()->alias != 'HO'){
+                if(Helpers::getBranch()->name == 'Supervisor'){
                     $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                 }
             })
@@ -823,7 +823,7 @@ class ProspectController extends Controller
                 if(isset($id)){
                     $query->where('branch_id', '=', $id);
                 }else{
-                    if(Helpers::getBranch()->alias == 'HO'){
+                    if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                         $query->where('branch_id', '=', 2);
                     }else{
                         $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -839,7 +839,7 @@ class ProspectController extends Controller
     public function salesperformanceajax(Request $request){
         if($request->ajax()){
             $n = \Carbon\Carbon::now();
-
+            $bid = Helpers::getBranch()->id;
             $branches = Branch::where('id', '>', 1)->pluck('name', 'id');
 
             $subBranches = SubBranch::select('id', 'branch_id', 'name')
@@ -848,7 +848,7 @@ class ProspectController extends Controller
                     if(isset($id)){
                         $query->where('branch_id', '=', $id);
                     }else{
-                        if(Helpers::getBranch()->alias == 'HO'){
+                        if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                             $query->where('branch_id', '=', 2);
                         }else{
                             $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -861,7 +861,7 @@ class ProspectController extends Controller
                 ->join('employees', 'employees.id', '=', 'marketing_groups.employee_id')
                 ->join('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
                 ->where(function($q){
-                    if(Helpers::getBranch()->alias != 'HO'){
+                    if(Helpers::getBranch()->name == 'Supervisor'){
                         $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                     }
                 })
@@ -870,7 +870,7 @@ class ProspectController extends Controller
                     if(isset($id)){
                         $query->where('branch_id', '=', $id);
                     }else{
-                        if(Helpers::getBranch()->alias == 'HO'){
+                        if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                             $query->where('branch_id', '=', 2);
                         }else{
                             $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -883,7 +883,7 @@ class ProspectController extends Controller
                 ->join('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
                 ->join('marketing_groups', 'marketing_groups.id', '=', 'marketing_has_employees.marketing_group_id')
                 ->where(function($q){
-                    if(Helpers::getBranch()->alias != 'HO'){
+                    if(Helpers::getBranch()->name == 'Supervisor'){
                         $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                     }
                 })
@@ -892,7 +892,7 @@ class ProspectController extends Controller
                     if(isset($id)){
                         $query->where('branch_id', '=', $id);
                     }else{
-                        if(Helpers::getBranch()->alias == 'HO'){
+                        if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                             $query->where('branch_id', '=', 2);
                         }else{
                             $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -912,7 +912,7 @@ class ProspectController extends Controller
                 ->join('employees', 'employees.id', '=', 'marketing_has_employees.employee_id')
                 ->where('last_status_id', '=', 3)
                 ->where(function($q){
-                    if(Helpers::getBranch()->alias != 'HO'){
+                    if(Helpers::getBranch()->name == 'Supervisor'){
                         $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                     }
                 })
@@ -931,7 +931,7 @@ class ProspectController extends Controller
                     if(isset($id)){
                         $query->where('branch_id', '=', $id);
                     }else{
-                        if(Helpers::getBranch()->alias == 'HO'){
+                        if(Helpers::getBranch()->alias == 'HO' || Helpers::getBranch()->name == 'Administration'){
                             $query->where('branch_id', '=', 2);
                         }else{
                             $query->where('branch_id', '=', Helpers::getBranch()->id);
@@ -969,7 +969,7 @@ class ProspectController extends Controller
             ->join('employees', 'employees.id', '=', 'marketing_groups.employee_id')
             ->join('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
             ->where(function($q){
-                if(Helpers::getBranch()->alias != 'HO'){
+                if(Helpers::getBranch()->name == 'Supervisor'){
                     $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                 }
             })
@@ -1010,7 +1010,7 @@ class ProspectController extends Controller
                 }
             })
             ->where(function($q){
-                if(Helpers::getBranch()->alias != 'HO'){
+                if(Helpers::getBranch()->name == 'Supervisor'){
                     $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                 }
             })
@@ -1027,7 +1027,7 @@ class ProspectController extends Controller
             ->leftjoin('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
             ->where('status_prospects.id', '>', 2)
             ->where(function($q){
-                if(Helpers::getBranch()->alias != 'HO'){
+                if(Helpers::getBranch()->name == 'Supervisor'){
                     $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                 }
             })
@@ -1076,7 +1076,7 @@ class ProspectController extends Controller
                 ->join('employees', 'employees.id', '=', 'marketing_groups.employee_id')
                 ->join('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
                 ->where(function($q){
-                    if(Helpers::getBranch()->alias != 'HO'){
+                    if(Helpers::getBranch()->name == 'Supervisor'){
                         $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                     }
                 })
@@ -1114,7 +1114,7 @@ class ProspectController extends Controller
                             });
                     })
                     ->where(function($q){
-                        if(Helpers::getBranch()->alias != 'HO'){
+                        if(Helpers::getBranch()->name == 'Supervisor'){
                             $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                         }
                     })
@@ -1143,7 +1143,7 @@ class ProspectController extends Controller
                 ->leftjoin('sub_branches', 'sub_branches.id', '=', 'employees.sub_branch_id')
                 ->where('status_prospects.id', '>', 2)
                 ->where(function($q){
-                    if(Helpers::getBranch()->alias != 'HO'){
+                    if(Helpers::getBranch()->name == 'Supervisor'){
                         $q->where('marketing_groups.id', Helpers::getBranch()->marketingId);
                     }
                 })
